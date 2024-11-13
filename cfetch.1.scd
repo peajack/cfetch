@@ -14,7 +14,7 @@ CFETCH(1)
 
 # CONFIGURATION
 
-*cfetch* is configured through *config.h* file in its source tree; copy *config.def.h* and you ready to go. Suckless enough! The file itself it self-documented and allows to choose different modules in different orders.
+*cfetch* is configured through *config.h* file in its source tree. Suckless enough! The file itself it self-documented and allows to choose different modules in different orders.
 
 # SEE ALSO
 
