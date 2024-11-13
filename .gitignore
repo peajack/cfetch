@@ -1,0 +1,6 @@
+cfetch
+*.o
+blocks/*.o
+vgcore*
+config.h
+cfetch.1
