@@ -6,43 +6,51 @@
 #include "cfetch.h"
 #include "config.h"
 #include "logos.h"
+#include "util.h"
 
-int main() {
-    int len = sizeof(blocks) / sizeof(struct data);
+int main(void) {
+    printf("\n"); // just an empty line okay?
 
+    int blocks_len = sizeof(blocks) / sizeof(struct block);
+    char *logo[9] = {0};
     char *os_name = "";
-    pthread_t threads[len + 1];
-    struct data results[len + 1];
+    pthread_t threads[blocks_len + 1];
+    struct data results[blocks_len + 1];
 
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < blocks_len; i++) {
         struct block block = blocks[i];
         results[i].flags = block.flags;
-        pthread_create(&threads[i], NULL, block.func, &results[i]);
+        if ((pthread_create(&threads[i], NULL, block.func, &results[i])) != 0) {
+            threads[i] = (pthread_t)NULL;
+        }
         if (block.func == os) {
             pthread_join(threads[i], NULL);
+            os_name = results[i].result;
             threads[i] = (pthread_t)NULL;
         }
     }
 
     if (strlen(os_name) == 0) {
-        pthread_create(&threads[len], NULL, os, &results[len]);
-        pthread_join(threads[len], NULL);
-        os_name = results[len].result;
+        if ((pthread_create(&threads[blocks_len], NULL, os,
+                            &results[blocks_len])) == 0) {
+            pthread_join(threads[blocks_len], NULL);
+            os_name = results[blocks_len].result;
+        }
     }
 
 #if HAS_LOGO == 1
-    char **logo = get_logo(os_name);
+    get_logo(logo, os_name);
 
-    int max = (len > 8) ? len : 8;
+    int max = (blocks_len > MAX_LOGO_LINES) ? blocks_len : MAX_LOGO_LINES;
 
     for (int j = 0; j < max; j++) {
-        if (j < len) {
+        if (j < blocks_len) {
             if (threads[j]) // 'cause we nulled some field before
                 pthread_join(threads[j], NULL);
             if (j == 0) // first field is shown as header
                 printf("%s" BOLD " %s\n" RESET, logo[j], results[j].result);
             else {
-                if (j <= 8) // if we are still showing logo
+                if (j < MAX_LOGO_LINES) // if we are still showing logo
                     printf("%s" BOLD " %s" RESET "\t%s\n", logo[j],
                            results[j].label, results[j].result);
                 else {
@@ -52,6 +60,7 @@ int main() {
                            results[j].result);
                 }
             }
+            free(results[j].result);
         } else {
             // no fields left, print only logo
             if (logo[j] == NULL)
@@ -60,13 +69,14 @@ int main() {
         }
     }
 #else
-    for (int j = 0; j < len; j++) {
+    for (int j = 0; j < blocks_len; j++) {
         if (threads[j])
             pthread_join(threads[j], NULL);
         if (j == 0)
-            printf("%s\n", results[j].result);
+            printf(BOLD "%s\n" RESET, results[j].result);
         else
-            printf("%s\t%s\n", results[j].label, results[j].result);
+            printf(BOLD "%s\t" RESET "%s\n", results[j].label,
+                   results[j].result);
     }
 #endif // HAS_LOGO
 }

@@ -1,4 +1,5 @@
 #include "kernel.h"
+#include "../util.h"
 #include <stdlib.h>
 #include <string.h>
 #include <sys/utsname.h>
@@ -9,10 +10,7 @@ void *kernel(void *arg) {
 
     struct utsname name;
     uname(&name);
-
-    char *buf = malloc(sizeof(char) * 100);
-    strncpy(buf, name.release, sizeof(buf) * sizeof(char));
-    data->result = buf;
+    data->result = strdup(name.release);
 
     return 0;
 }

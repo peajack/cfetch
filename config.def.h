@@ -3,8 +3,8 @@
 #define HAS_LOGO 1
 
 struct block blocks[] = {
-	{ user,		"%s",		USERNAME | HOSTNAME		},
-	{ os,		"%s",		0						},
-    { kernel,	"%s",		0						},
-    // { shell,	"%s",		NULL 			}
+	{ user,		USERNAME | HOSTNAME		},
+	{ os,		0						},
+    { kernel,	0						},
+    { shell,	0 						},
 };

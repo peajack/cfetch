@@ -1,8 +1,6 @@
 #ifndef CFETCH_H
 #define CFETCH_H
 
-#include <stddef.h>
-
 struct data {
     unsigned int flags;
     char *result;
@@ -11,7 +9,6 @@ struct data {
 
 struct block {
     void *(*func)(void *);
-    char *format;
     unsigned int flags;
 };
 

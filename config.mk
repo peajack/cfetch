@@ -1,5 +1,5 @@
-CC		=	cc
-CFLAGS	=	-ggdb3 -O1 -std=c99
-LDFLAGS	=	-s -ggdb3
-BLOCKS	=	blocks/kernel blocks/user blocks/os
+CC		=	gcc
+CFLAGS	=	-std=c99 -O2 -Werror -Wall -pedantic
+LDFLAGS	=	-s
+BLOCKS	=	blocks/kernel blocks/user blocks/os blocks/shell
 MANUAL	=	cfetch.1.scd
