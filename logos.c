@@ -27,5 +27,13 @@ void get_logo(char *logo[MAX_LOGO_LINES], char *os) {
 	logo[4] = RED " ;         ; "   RESET;
 	logo[5] = RED "  '-_____-'  "   RESET;
 	logo[6] = RED "             "   RESET;
+#elif defined(__OpenBSD__)
+	logo[0] = YELLOW "      _____    "   RESET;
+	logo[1] = YELLOW "    \\-     -/  "  RESET;
+	logo[2] = YELLOW " \\_/         \\ " RESET;
+	logo[3] = YELLOW " |        " BWHITE "O O" BYELLOW " |" RESET;
+	logo[4] = YELLOW " |_  <   )  3 )"   RESET;
+	logo[5] = YELLOW " / \\         / "  RESET;
+	logo[6] = YELLOW "    /-_____-\\  "  RESET;
 #endif // linux
 }

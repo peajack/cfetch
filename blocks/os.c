@@ -30,15 +30,15 @@ void *os(void *args) {
 
 #elif defined(__FreeBSD__)
 
-    data->result = "FreeBSD";
+    data->result = strdup("FreeBSD");
 
 #elif defined(__OpenBSD__)
 
-    data->result = "OpenBSD";
+    data->result = strdup("OpenBSD");
 
 #elif defined(__NetBSD__)
 
-    data->result = "NetBSD";
+    data->result = strdup("NetBSD");
 
 #endif
     return 0;
