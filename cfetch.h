@@ -17,6 +17,7 @@ struct block {
 #include "blocks/shell.h"
 #include "blocks/uptime.h"
 #include "blocks/user.h"
+#include "blocks/memory.h"
 
 int main(void);
 #endif // CFETCH_H
