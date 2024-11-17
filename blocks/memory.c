@@ -45,7 +45,7 @@ void *memory(void *args) {
 
 	int mib[] = {CTL_VM, VM_UVMEXP};
 	struct uvmexp uvmexp;
-	size = sizeof(uvmexp);
+	size_t size = sizeof(uvmexp);
 	if (sysctl(mib, 2, &uvmexp, &size, NULL, 0) == -1) {
 		bzero(&uvmexp, size);
 		return 0;
