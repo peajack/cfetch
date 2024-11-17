@@ -6,6 +6,7 @@
 #include <sys/sysctl.h>
 #include <uvm/uvmexp.h>
 #include <unistd.h>
+#include <strings.h>
 #endif
 
 void *memory(void *args) {
@@ -43,6 +44,7 @@ void *memory(void *args) {
 
 #elif defined(__OpenBSD__)
 
+	(void)mem_available;
 	int mib[] = {CTL_VM, VM_UVMEXP};
 	struct uvmexp uvmexp;
 	size_t size = sizeof(uvmexp);
