@@ -29,6 +29,12 @@ void get_logo(char *logo[MAX_LOGO_LINES], char *os) {
 		
 	} else if (strncmp(os, "Void Linux", 10) == 0) {
 		
+	} else if (strncmp(os, "Android", 7) == 0) {
+		logo[0] = GREEN "   -o          o-   " RESET;
+		logo[1] = GREEN "    +hydNNNNdyh+    " RESET;
+		logo[2] = GREEN "  +mMMMMMMMMMMMMm+  " RESET;
+		logo[3] = GREEN " dMMm:NMMMMMMN:mMMd " RESET;
+		logo[4] = GREEN "hMMMMMMMMMMMMMMMMMMh" RESET;
 	}
 #elif defined(__FreeBSD__)
 	logo[0] = RED "/\\,-'''''-,/\\" RESET;
