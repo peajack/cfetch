@@ -1,7 +1,6 @@
 #include "user.h"
 #include "../util.h"
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <sys/utsname.h>
 #include <unistd.h>
@@ -11,6 +10,7 @@ void *user(void *arg) {
 #define HOSTNAME_LEN 50
     struct data *data = (struct data *)arg;
     data->label = "USER";
+	data->result = "alien@ufo";
     char username[USERNAME_LEN + 1];
     char hostname[HOSTNAME_LEN + 1];
 

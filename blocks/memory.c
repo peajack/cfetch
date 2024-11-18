@@ -60,7 +60,9 @@ void *memory(void *args) {
 #define BUFSIZE 100
 	char buf[BUFSIZE];
 	snprintf(buf, BUFSIZE, "%lu/%lu MB (%d%%)", mem_used, mem_total, used_percent);
-	data->result = strdup(buf);
+	data->result = buf;
+
+	data->result = strdup(data->result);
 	return 0;
 }
 

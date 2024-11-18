@@ -10,10 +10,11 @@ void *shell(void *arg) {
 	
 	char *env;
 	if ((env = getenv("SHELL")) != NULL) {
-		data->result = strdup(basename(env));
-		return 0;
+		data->result = basename(env);
 	}
 	//pid_t ppid = getppid();
 	//data->result = "idk";
+	
+	data->result = strdup(data->result);
 	return 0;
 }
