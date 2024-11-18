@@ -15,7 +15,6 @@ void *memory(void *args) {
 	data->result = "undefined/null MB (NaN%)";
 
 	unsigned long mem_total = 0;
-	unsigned long mem_available = 0;
 	unsigned long mem_used = 0;
 	unsigned int used_percent = 0;
 
@@ -26,6 +25,7 @@ void *memory(void *args) {
 #define LINESIZE 100
 	char line[LINESIZE];
 
+	unsigned long mem_available = 0;
 	while (fgets(line, LINESIZE, meminfo)) {
 		sscanf(line, "MemTotal: %lu kB", &mem_total);
 		sscanf(line, "MemAvailable: %lu kB", &mem_available);
@@ -37,14 +37,11 @@ void *memory(void *args) {
 
 	mem_total = mem_total / 1024;
 	mem_available = mem_available / 1024;
-
 	mem_used = mem_total - mem_available;
-	if (mem_total && mem_used)
-		used_percent = ((double)(mem_used) / (double)(mem_total)) * 100;
+	
 
 #elif defined(__OpenBSD__)
 
-	(void)mem_available;
 	int mib[] = {CTL_VM, VM_UVMEXP};
 	struct uvmexp uvmexp;
 	size_t size = sizeof(uvmexp);
@@ -52,17 +49,13 @@ void *memory(void *args) {
 		bzero(&uvmexp, size);
 		return 0;
 	}
-	int pagesize = getpagesize();
-	int pageshift = 0;
-	while (pagesize > 1) {
-		pageshift++;
-		pagesize >>= 1;
-	}
-	pageshift -= 10;
-
-	mem_used = uvmexp.active << pageshift;
+	mem_total = (uvmexp.npages << uvmexp.pageshift) / 1024 / 1024;
+	mem_used = (uvmexp.active << uvmexp.pageshift) / 1024 / 1024;
 
 #endif
+
+	if (mem_total && mem_used)
+		used_percent = ((double)(mem_used) / (double)(mem_total)) * 100;
 
 #define BUFSIZE 100
 	char buf[BUFSIZE];

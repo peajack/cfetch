@@ -8,10 +8,11 @@ void *die(char *why) {
 }
 
 char *strdup(const char *s) {
-    char *result = malloc(strlen(s) + 1);
+	size_t size = strlen(s) + 1;
+    char *result = malloc(size);
     if (result == NULL)
         die("malloc");
-    strcpy(result, s);
+    memcpy(result, s, size);
     return result;
 }
 

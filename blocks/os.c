@@ -8,7 +8,7 @@
 void *os(void *args) {
     struct data *data = (struct data *)args;
     data->label = "OS";
-    data->result = "unknown";
+    data->result = strdup("unknown");
 #if defined(__linux__)
 
     FILE *file = fopen("/etc/os-release", "r");
