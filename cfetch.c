@@ -12,7 +12,7 @@ int main(void) {
     printf("\n"); // just an empty line okay?
 
     int blocks_len = sizeof(blocks) / sizeof(struct block);
-    char *logo[9] = {0};
+    char *logo[MAX_LOGO_LINES+1] = {0};
     char *os_name = "";
     pthread_t threads[blocks_len + 1];
     struct data results[blocks_len + 1];
@@ -41,7 +41,14 @@ int main(void) {
 #if HAS_LOGO == 1
     get_logo(logo, os_name);
 
-    int max = (blocks_len > MAX_LOGO_LINES) ? blocks_len : MAX_LOGO_LINES;
+	int logo_lines = 0;
+	for (int k = 0; k < MAX_LOGO_LINES; k++) {
+		if (logo[k] == NULL)
+			break;
+		logo_lines++;
+	}
+
+    int max = (blocks_len > logo_lines) ? blocks_len : logo_lines;
 
     for (int j = 0; j < max; j++) {
         if (j < blocks_len) {
@@ -50,15 +57,14 @@ int main(void) {
             if (j == 0) // first field is shown as header
                 printf("%s" BOLD " %s\n" RESET, logo[j], results[j].result);
             else {
-                if (j < MAX_LOGO_LINES) // if we are still showing logo
+                if (j < logo_lines) // if we are still showing logo
                     printf("%s" BOLD " %s" RESET "\t%s\n", logo[j],
                            results[j].label, results[j].result);
-                else {
-                    // logo ended, add whitespaces
+                else // logo ended, add whitespaces
                     printf("%*c" BOLD " %s" RESET "\t%s\n",
-                           (int)(strlen(logo[8])), ' ', results[j].label,
+                           (int)(strlen(logo[logo_lines-1])), ' ',
+						   results[j].label,
                            results[j].result);
-                }
             }
             free(results[j].result);
         } else {
@@ -79,4 +85,5 @@ int main(void) {
                    results[j].result);
     }
 #endif // HAS_LOGO
+	printf("\n"); // just an empty line
 }
