@@ -18,9 +18,11 @@ CFETCH(1)
 
 # SEE ALSO
 
-slstatus(1) - share the soul
-afetch(1) - share the logos
-truefetch(1) - share the author
+*slstatus(1)* - share the soul
+
+*afetch(1)* - share the logos
+
+*truefetch(1)* - share the author
 
 # AUTHOR
 

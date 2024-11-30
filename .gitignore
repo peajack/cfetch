@@ -2,5 +2,6 @@ cfetch
 *.o
 blocks/*.o
 vgcore*
+*.core
 config.h
 cfetch.1

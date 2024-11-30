@@ -19,7 +19,14 @@ cfetch.1: $(MANUAL)
 	scdoc < $(MANUAL) > cfetch.1
 
 clean:
-	rm -f cfetch *.o blocks/*.o
+	rm -f cfetch.1 cfetch *.o blocks/*.o
+
+install: all
+	cp -f ./cfetch "$(PREFIX)/bin"
+	chmod 755 "$(PREFIX)/bin/cfetch"
+	mkdir -p "$(PREFIX)/share/man/man1"
+	cp -f ./cfetch.1 "$(PREFIX)/share/man/man1"
+	chmod 644 "$(PREFIX)/share/man/man1/cfetch.1"
 
 .SUFFIXES: .c .o
 .c.o:

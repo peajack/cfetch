@@ -49,7 +49,7 @@ void *memory(void *args) {
 		bzero(&uvmexp, size);
 		return 0;
 	}
-	mem_total = (uvmexp.npages << uvmexp.pageshift) / 1024 / 1024;
+	mem_total = ((int64_t)uvmexp.npages << uvmexp.pageshift) / 1024 / 1024;
 	mem_used = (uvmexp.active << uvmexp.pageshift) / 1024 / 1024;
 
 #endif
