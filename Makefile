@@ -9,7 +9,7 @@ logos.o: cfetch.h
 util.o: util.h
 cfetch.o: cfetch.c cfetch.h config.h logos.h $(BLOCKS:=.h)
 
-config.h: config.def.h
+config.h:
 	cat config.def.h > config.h
 
 cfetch: cfetch.o util.o logos.o $(BLOCKS:=.o)

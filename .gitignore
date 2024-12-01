@@ -3,5 +3,6 @@ cfetch
 blocks/*.o
 vgcore*
 *.core
+*.swp
 config.h
 cfetch.1
