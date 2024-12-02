@@ -17,7 +17,7 @@ void *uptime(void *args) {
     FILE *uptime_file = fopen("/proc/uptime", "r");
     char line[100];
     fgets(line, 100, uptime_file);
-    sscanf(line, "%lld %[]", sec);
+    sscanf(line, "%lld %[^]", &sec);
     fclose(uptime_file);
 
 #else
