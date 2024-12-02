@@ -12,7 +12,7 @@ int main(void) {
     printf("\n"); // just an empty line okay?
 
     int blocks_len = sizeof(blocks) / sizeof(struct block);
-    char *os_name = "";
+    char *os_name;
     pthread_t threads[blocks_len + 1];
     struct data results[blocks_len + 1];
 
@@ -29,7 +29,7 @@ int main(void) {
         }
     }
 
-    if (strlen(os_name) == 0) {
+    if (!os_name) {
         if ((pthread_create(&threads[blocks_len], NULL, os,
                             &results[blocks_len])) == 0) {
             pthread_join(threads[blocks_len], NULL);
