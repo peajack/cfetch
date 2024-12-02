@@ -12,6 +12,8 @@ void *cpu(void *args) {
     data->result = "n/a";
 #if defined(__linux__)
 
+    goto end;
+
 #elif defined(__OpenBSD__)
 
     int mib[2] = {CTL_HW, HW_MODEL};
