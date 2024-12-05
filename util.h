@@ -5,5 +5,5 @@ void die(const char *);
 char *strdup(const char *);
 char *basename(char *);
 
-#endif // CFETCH_UTIL_H
+#endif /* CFETCH_UTIL_H */
 

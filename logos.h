@@ -11,4 +11,4 @@
 
 void get_logo(char *logo[MAX_LOGO_LINES+1], char *os);
 
-#endif // CFETCH_LOGOS_H
+#endif /* CFETCH_LOGOS_H */

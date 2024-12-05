@@ -55,5 +55,5 @@ void get_logo(char *logo[MAX_LOGO_LINES+1], char *os) {
 	logo[5] = YELLOW " / \\         / "  RESET;
 	logo[6] = YELLOW "    /-_____-\\  "  RESET;
 	logo[7] =        "               ";
-#endif // linux
+#endif
 }

@@ -5,4 +5,4 @@
 
 void *os(void *);
 
-#endif // CFETCH_OS_H
+#endif /* CFETCH_OS_H */

@@ -5,10 +5,10 @@
 #include <sys/utsname.h>
 
 void *kernel(void *arg) {
+    struct utsname name;
     struct data *data = (struct data *)arg;
     data->label = "KERNEL";
 
-    struct utsname name;
     uname(&name);
     data->result = strdup(name.release);
 

@@ -6,23 +6,31 @@
 #include "../util.h"
 
 void *uptime(void *args) {
+#define BUFSIZE 50
+    int days, hours, minutes;
+    int64_t sec;
+    char buf[BUFSIZE];
+#if defined(__linux__)
+#define LINESIZE 100
+    FILE *uptime_file;
+    char line[LINESIZE];
+#else
+    struct timespec timespec;
+#endif
+
     struct data *data = (struct data *)args;
     data->label = "UPTIME";
     data->result = "n/a";
 
-    int days, hours, minutes = 0;
-    long long sec = 0;
 #if defined(__linux__)
 
-    FILE *uptime_file = fopen("/proc/uptime", "r");
-    char line[100];
+    uptime_file = fopen("/proc/uptime", "r");
     fgets(line, 100, uptime_file);
     sscanf(line, "%lld %*d", &sec);
     fclose(uptime_file);
 
 #else
 
-    struct timespec timespec;
     clock_gettime(CLOCK_UPTIME, &timespec);
     sec = timespec.tv_sec;
 
@@ -34,7 +42,6 @@ void *uptime(void *args) {
     sec = sec % 3600;
     minutes = sec / 60;
     
-    char buf[50];
     snprintf(buf, 50, "%dd %dh %dm", days, hours, minutes);
     data->result = buf;
 

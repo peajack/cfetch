@@ -5,4 +5,4 @@
 
 void *kernel(void *);
 
-#endif // CFETCH_KERNEL_H
+#endif /* CFETCH_KERNEL_H */

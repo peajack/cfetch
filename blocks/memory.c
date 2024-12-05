@@ -10,22 +10,32 @@
 #endif
 
 void *memory(void *args) {
-	struct data *data = (struct data *)args;
-	data->label = "MEMORY";
-	data->result = "undefined/null MB (NaN%)";
-
+#if defined(__OpenBSD__)
+#define BUFSIZE 100
+	char buf[BUFSIZE];
+    int mib[2];
+	struct uvmexp uvmexp;
+	size_t size;
+#elif defined(__linux__)
+#define LINESIZE 100
+    FILE *meminfo;
+    char line[LINESIZE];
+    unsigned long mem_available;
+#endif
 	unsigned long mem_total = 0;
 	unsigned long mem_used = 0;
 	unsigned int used_percent = 0;
+    
+
+    struct data *data = (struct data *)args;
+	data->label = "MEMORY";
+	data->result = "undefined/null MB (NaN%)";
+
 
 #if defined(__linux__)
 
-	FILE *meminfo = fopen("/proc/meminfo", "r");
+	meminfo = fopen("/proc/meminfo", "r");
 
-#define LINESIZE 100
-	char line[LINESIZE];
-
-	unsigned long mem_available = 0;
 	while (fgets(line, LINESIZE, meminfo)) {
 		sscanf(line, "MemTotal: %lu kB", &mem_total);
 		sscanf(line, "MemAvailable: %lu kB", &mem_available);
@@ -42,9 +52,9 @@ void *memory(void *args) {
 
 #elif defined(__OpenBSD__)
 
-	int mib[] = {CTL_VM, VM_UVMEXP};
-	struct uvmexp uvmexp;
-	size_t size = sizeof(uvmexp);
+	mib[0] = CTL_VM;
+    mib[1] = VM_UVMEXP;
+    size = sizeof(uvmexp);
 	if (sysctl(mib, 2, &uvmexp, &size, NULL, 0) == -1) {
 		bzero(&uvmexp, size);
 		return 0;
@@ -57,8 +67,6 @@ void *memory(void *args) {
 	if (mem_total && mem_used)
 		used_percent = ((double)(mem_used) / (double)(mem_total)) * 100;
 
-#define BUFSIZE 100
-	char buf[BUFSIZE];
 	snprintf(buf, BUFSIZE, "%lu/%lu MB (%d%%)", mem_used, mem_total, used_percent);
 	data->result = buf;
 

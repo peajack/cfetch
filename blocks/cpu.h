@@ -4,4 +4,4 @@
 #include "../cfetch.h"
 void *cpu(void *);
 
-#endif // CFETCH_CPU_H
+#endif /* CFETCH_CPU_H */

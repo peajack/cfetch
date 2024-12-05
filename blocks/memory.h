@@ -5,4 +5,4 @@
 
 void *memory(void *);
 
-#endif // CFETCH_MEMORY_H
+#endif /* CFETCH_MEMORY_H */

@@ -1,6 +1,7 @@
 #ifndef CFETCH_H
 #define CFETCH_H
 
+
 struct data {
     unsigned int flags;
     char *result;
@@ -21,4 +22,4 @@ struct block {
 #include "blocks/cpu.h"
 
 int main(void);
-#endif // CFETCH_H
+#endif /* CFETCH_H */

@@ -8,12 +8,16 @@ void *die(char *why) {
 }
 
 char *strdup(const char *s) {
-	size_t size = strlen(s) + 1;
+#ifndef HAS_STRDUP
+    size_t size = strlen(s) + 1;
     char *result = malloc(size);
     if (result == NULL)
         die("malloc");
     memcpy(result, s, size);
     return result;
+#else
+    return strdup(s);
+#endif /* HAS_STRDUP */
 }
 
 char *basename(char *path) {

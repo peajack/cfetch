@@ -4,5 +4,5 @@
 #include "../cfetch.h"
 void *uptime(void *);
 
-#endif // CFETCH_UPTIME_H
+#endif /* CFETCH_UPTIME_H */
 
