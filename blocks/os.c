@@ -6,21 +6,24 @@
 #include <unistd.h>
 
 void *os(void *args) {
+#if defined(__linux__) && !defined(__ANDROID__)
+    FILE *file;
+#define NAMESIZE 100
+#define LINESIZE 200
+    char os_name[NAMESIZE];
+    char line[LINESIZE];
+#endif
     struct data *data = (struct data *)args;
     data->label = "OS";
     data->result = "unknown";
 #if defined(__linux__) && !defined(__ANDROID__)
 
 	data->result = "Linux";
-    FILE *file = fopen("/etc/os-release", "r");
+    file = fopen("/etc/os-release", "r");
     if (file == NULL) {
         return 0;
     }
 
-#define NAMESIZE 100
-#define LINESIZE 200
-    char os_name[NAMESIZE];
-    char line[LINESIZE];
     while ((fgets(line, LINESIZE, file))) {
         if ((sscanf(line, "NAME=\"%[^\n\"]\"\n", os_name)) == 1) {
             data->result = os_name;
