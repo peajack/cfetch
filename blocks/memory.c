@@ -11,8 +11,6 @@
 
 void *memory(void *args) {
 #if defined(__OpenBSD__)
-#define BUFSIZE 100
-	char buf[BUFSIZE];
     int mib[2];
 	struct uvmexp uvmexp;
 	size_t size;
@@ -22,6 +20,8 @@ void *memory(void *args) {
     char line[LINESIZE];
     unsigned long mem_available;
 #endif
+#define BUFSIZE 100
+	char buf[BUFSIZE];
 	unsigned long mem_total = 0;
 	unsigned long mem_used = 0;
 	unsigned int used_percent = 0;
