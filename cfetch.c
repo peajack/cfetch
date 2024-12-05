@@ -22,6 +22,7 @@ int main(void) {
     int max;
     char *logo[MAX_LOGO_LINES + 1] = {0};
 #endif
+    os_name = "";
 
     printf("\n"); /* just an empty line okay? */
 
@@ -113,4 +114,5 @@ int main(void) {
     }
 #endif /* HAS_LOGO */
     printf("\n");
+    return 0;
 }
