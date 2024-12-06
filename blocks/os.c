@@ -16,6 +16,7 @@ void *os(void *args) {
     struct data *data = (struct data *)args;
     data->label = "OS";
     data->result = "unknown";
+
 #if defined(__linux__) && !defined(__ANDROID__)
 
 	data->result = "Linux";

@@ -6,6 +6,7 @@
 
 void *kernel(void *arg) {
     struct utsname name;
+
     struct data *data = (struct data *)arg;
     data->label = "KERNEL";
 

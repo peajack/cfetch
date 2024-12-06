@@ -20,7 +20,7 @@ int main(void) {
     int logo_lines = 0;
     int line_length;
     int max;
-    char *logo[MAX_LOGO_LINES + 1] = {0};
+    char *logo[9] = {0};
 #endif
     os_name = "";
 
@@ -62,7 +62,7 @@ int main(void) {
 #if HAS_LOGO == 1
     get_logo(logo, os_name);
 
-    for (l = 0; l < MAX_LOGO_LINES; l++) {
+    for (l = 0; l < 9; l++) {
         if (logo[l] == NULL)
             break;
         logo_lines++;
