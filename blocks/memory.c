@@ -25,17 +25,14 @@ void *memory(void *args) {
 	unsigned long mem_total = 0;
 	unsigned long mem_used = 0;
 	unsigned int used_percent = 0;
-    
 
     struct data *data = (struct data *)args;
 	data->label = "MEMORY";
 	data->result = "undefined/null MB (NaN%)";
 
-
 #if defined(__linux__)
 
 	meminfo = fopen("/proc/meminfo", "r");
-
 	while (fgets(line, LINESIZE, meminfo)) {
 		sscanf(line, "MemTotal: %lu kB", &mem_total);
 		sscanf(line, "MemAvailable: %lu kB", &mem_available);
@@ -48,7 +45,6 @@ void *memory(void *args) {
 	mem_total = mem_total / 1024;
 	mem_available = mem_available / 1024;
 	mem_used = mem_total - mem_available;
-	
 
 #elif defined(__OpenBSD__)
 
@@ -59,6 +55,7 @@ void *memory(void *args) {
 		bzero(&uvmexp, size);
 		return 0;
 	}
+
 	mem_total = ((int64_t)uvmexp.npages << uvmexp.pageshift) / 1024 / 1024;
 	mem_used = (uvmexp.active << uvmexp.pageshift) / 1024 / 1024;
 
@@ -68,9 +65,8 @@ void *memory(void *args) {
 		used_percent = ((double)(mem_used) / (double)(mem_total)) * 100;
 
 	snprintf(buf, BUFSIZE, "%lu/%lu MB (%d%%)", mem_used, mem_total, used_percent);
-	data->result = buf;
 
-	data->result = strdup(data->result);
+	data->result = strdup(buf);
 	return 0;
 }
 

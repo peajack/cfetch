@@ -48,6 +48,7 @@ int main(void) {
         }
     }
 
+
     for (k = 0; k < BLOCKS_LEN; k++) {
         if (threads[k]) {
             int len;
