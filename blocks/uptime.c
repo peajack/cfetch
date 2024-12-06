@@ -8,7 +8,7 @@
 void *uptime(void *args) {
 #define BUFSIZE 50
     int days, hours, minutes;
-    int64_t sec;
+    unsigned int sec;
     char buf[BUFSIZE];
 #if defined(__linux__)
 #define LINESIZE 100
@@ -26,13 +26,13 @@ void *uptime(void *args) {
 
     uptime_file = fopen("/proc/uptime", "r");
     fgets(line, 100, uptime_file);
-    sscanf(line, "%lld %*d", &sec);
+    sscanf(line, "%u %*d", &sec);
     fclose(uptime_file);
 
 #else
 
     clock_gettime(CLOCK_UPTIME, &timespec);
-    sec = timespec.tv_sec;
+    sec = (unsigned int)timespec.tv_sec;
 
 #endif
 
