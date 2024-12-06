@@ -50,9 +50,11 @@ int main(void) {
 
     for (k = 0; k < BLOCKS_LEN; k++) {
         if (threads[k]) {
+            int len;
             pthread_join(threads[k], NULL);
-            if (label_length < strlen(results[k].label))
-                label_length = strlen(results[k].label);
+            len = strlen(results[k].label);
+            if (label_length < len)
+                label_length = len;
         }
     }
 
