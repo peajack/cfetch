@@ -8,6 +8,7 @@ void *shell(void *arg) {
     char *env;
     struct data *data = (struct data *)arg;
     data->label = "SHELL";
+    data->result = "n/a";
 
     if ((env = getenv("SHELL")) != NULL) {
         data->result = basename(env);

@@ -32,10 +32,10 @@ void *cpu(void *args) {
     if (sysctl(mib, 2, &model, &len, NULL, 0) == -1)
         goto end;
     data->result = model;
-    goto end;
 
 #endif
 
+    goto end;
 end:
     data->result = strdup(data->result);
     return 0;

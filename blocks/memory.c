@@ -33,6 +33,9 @@ void *memory(void *args) {
 #if defined(__linux__)
 
     meminfo = fopen("/proc/meminfo", "r");
+    if (meminfo == NULL) {
+        goto end;
+    }
     while (fgets(line, LINESIZE, meminfo)) {
         sscanf(line, "MemTotal: %lu kB", &mem_total);
         sscanf(line, "MemAvailable: %lu kB", &mem_available);
@@ -51,7 +54,7 @@ void *memory(void *args) {
     mib[1] = VM_UVMEXP;
     if (sysctl(mib, 2, &uvmexp, &size, NULL, 0) == -1) {
         bzero(&uvmexp, size);
-        return 0;
+        goto end;
     }
 
     mem_total = ((int64_t)uvmexp.npages << uvmexp.pageshift) / 1024 / 1024;
@@ -64,7 +67,9 @@ void *memory(void *args) {
 
     snprintf(buf, BUFSIZE, "%lu/%lu MB (%d%%)", mem_used, mem_total,
              used_percent);
+    goto end;
 
+end:
     data->result = strdup(buf);
     return 0;
 }

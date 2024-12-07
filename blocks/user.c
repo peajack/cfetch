@@ -11,9 +11,10 @@ void *user(void *arg) {
 #define BUFLEN sizeof(char) * (USERNAME_LEN + HOSTNAME_LEN + 2)
     char username[USERNAME_LEN + 1];
     char hostname[HOSTNAME_LEN + 1];
-    struct data *data = (struct data *)arg;
-    struct utsname name;
     char buf[BUFLEN];
+    struct utsname name;
+
+    struct data *data = (struct data *)arg;
     data->label = "USER";
     data->result = "alien@ufo";
 
@@ -29,11 +30,13 @@ void *user(void *arg) {
 
     if (data->flags & HOSTNAME && data->flags & USERNAME) {
         snprintf(buf, BUFLEN, "%s@%s", username, hostname);
-        data->result = strdup(buf);
+        data->result = buf;
     } else if (data->flags & HOSTNAME) {
-        data->result = strdup(hostname);
+        data->result = hostname;
     } else {
-        data->result = strdup(username);
+        data->result = username;
     }
+
+    data->result = strdup(data->result);
     return 0;
 }

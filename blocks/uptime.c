@@ -7,8 +7,8 @@
 
 void *uptime(void *args) {
 #define BUFSIZE 50
-    int days, hours, minutes;
-    unsigned int sec;
+    int days, hours, minutes = 0;
+    unsigned int sec = 0;
     char buf[BUFSIZE];
 #if defined(__linux__)
 #define LINESIZE 100
@@ -25,6 +25,9 @@ void *uptime(void *args) {
 #if defined(__linux__)
 
     uptime_file = fopen("/proc/uptime", "r");
+    if (uptime_file == NULL) {
+        goto end;
+    }
     fgets(line, 100, uptime_file);
     sscanf(line, "%u %*d", &sec);
     fclose(uptime_file);
@@ -45,6 +48,8 @@ void *uptime(void *args) {
     snprintf(buf, 50, "%dd %dh %dm", days, hours, minutes);
     data->result = buf;
 
+    goto end;
+end:
     data->result = strdup(data->result);
     return 0;
 }

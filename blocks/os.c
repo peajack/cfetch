@@ -22,7 +22,7 @@ void *os(void *args) {
     data->result = "Linux";
     file = fopen("/etc/os-release", "r");
     if (file == NULL) {
-        return 0;
+        goto end;
     }
 
     while ((fgets(line, LINESIZE, file))) {
@@ -51,6 +51,8 @@ void *os(void *args) {
 
 #endif
 
+    goto end;
+end:
     data->result = strdup(data->result);
     return 0;
 }
