@@ -1,4 +1,6 @@
-#ifndef __linux__
+#if defined(__linux__)
+#include <sys/sysinfo.h>
+#else
 #include <time.h>
 #endif
 #include "../util.h"
@@ -8,12 +10,10 @@
 void *uptime(void *args) {
 #define BUFSIZE 50
     int days, hours, minutes = 0;
-    unsigned int sec = 0;
+    long sec = 0;
     char buf[BUFSIZE];
 #if defined(__linux__)
-#define LINESIZE 100
-    FILE *uptime_file;
-    char line[LINESIZE];
+    struct sysinfo info;
 #else
     struct timespec timespec;
 #endif
@@ -24,18 +24,13 @@ void *uptime(void *args) {
 
 #if defined(__linux__)
 
-    uptime_file = fopen("/proc/uptime", "r");
-    if (uptime_file == NULL) {
-        goto end;
-    }
-    fgets(line, 100, uptime_file);
-    sscanf(line, "%u %*d", &sec);
-    fclose(uptime_file);
+    sysinfo(&info);
+    sec = info.uptime;
 
 #else
 
     clock_gettime(CLOCK_UPTIME, &timespec);
-    sec = (unsigned int)timespec.tv_sec;
+    sec = timespec.tv_sec;
 
 #endif
 
@@ -46,10 +41,7 @@ void *uptime(void *args) {
     minutes = sec / 60;
 
     snprintf(buf, 50, "%dd %dh %dm", days, hours, minutes);
-    data->result = buf;
 
-    goto end;
-end:
-    data->result = strdup(data->result);
+    data->result = strdup(buf);
     return 0;
 }
