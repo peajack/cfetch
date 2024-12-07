@@ -23,10 +23,9 @@ char *polyfill_strdup(const char *s) {
 }
 
 char *basename(char *path) {
-	char *s = strrchr(path, '/');
-	if (!s)
-		return s;
-	else
-		return s + 1;
+    char *s = strrchr(path, '/');
+    if (!s)
+        return s;
+    else
+        return s + 1;
 }
-

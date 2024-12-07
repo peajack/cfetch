@@ -1,9 +1,9 @@
 #ifndef __linux__
 #include <time.h>
 #endif
-#include <stdio.h>
-#include "uptime.h"
 #include "../util.h"
+#include "uptime.h"
+#include <stdio.h>
 
 void *uptime(void *args) {
 #define BUFSIZE 50
@@ -41,11 +41,10 @@ void *uptime(void *args) {
     hours = sec / 3600;
     sec = sec % 3600;
     minutes = sec / 60;
-    
+
     snprintf(buf, 50, "%dd %dh %dm", days, hours, minutes);
     data->result = buf;
 
     data->result = strdup(data->result);
     return 0;
 }
-

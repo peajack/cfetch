@@ -1,9 +1,9 @@
-#include <unistd.h>
 #include "cpu.h"
 #include "../util.h"
+#include <unistd.h>
 #ifdef __OpenBSD__
-#include <sys/types.h>
 #include <sys/sysctl.h>
+#include <sys/types.h>
 #endif
 
 void *cpu(void *args) {
@@ -40,4 +40,3 @@ end:
     data->result = strdup(data->result);
     return 0;
 }
-

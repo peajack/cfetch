@@ -19,7 +19,7 @@ void *os(void *args) {
 
 #if defined(__linux__) && !defined(__ANDROID__)
 
-	data->result = "Linux";
+    data->result = "Linux";
     file = fopen("/etc/os-release", "r");
     if (file == NULL) {
         return 0;
@@ -31,11 +31,11 @@ void *os(void *args) {
             break;
         }
     }
-	fclose(file);
+    fclose(file);
 
 #elif defined(__ANDROID__)
 
-	data->result = "Android";
+    data->result = "Android";
 
 #elif defined(__FreeBSD__)
 
@@ -51,6 +51,6 @@ void *os(void *args) {
 
 #endif
 
-	data->result = strdup(data->result);
+    data->result = strdup(data->result);
     return 0;
 }

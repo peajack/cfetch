@@ -18,14 +18,14 @@
  *              no flags
  * cpu          cpu model
  *              no flags
-**/
+ **/
 
 struct block blocks[] = {
     /* block    flags                  */
-    { user,		USERNAME | HOSTNAME		},
-	{ os,		0						},
-    { kernel,	0						},
-    { shell,	0 						},
-    { uptime,   0                       },
-	{ memory,	0						},
+    {user, USERNAME | HOSTNAME},
+    {os, 0},
+    {kernel, 0},
+    {shell, 0},
+    {uptime, 0},
+    {memory, 0},
 };

@@ -5,4 +5,3 @@
 void *uptime(void *);
 
 #endif /* CFETCH_UPTIME_H */
-

@@ -6,4 +6,3 @@ char *strdup(const char *);
 char *basename(char *);
 
 #endif /* CFETCH_UTIL_H */
-

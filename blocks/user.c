@@ -15,16 +15,16 @@ void *user(void *arg) {
     struct utsname name;
     char buf[BUFLEN];
     data->label = "USER";
-	data->result = "alien@ufo";
+    data->result = "alien@ufo";
 
     if (data->flags & USERNAME) {
         strncpy(username, getlogin(), sizeof(char) * USERNAME_LEN);
-		username[USERNAME_LEN] = '\0';
+        username[USERNAME_LEN] = '\0';
     }
     if (data->flags & HOSTNAME) {
         uname(&name);
         strncpy(hostname, name.nodename, sizeof(char) * HOSTNAME_LEN);
-		hostname[HOSTNAME_LEN] = '\0';
+        hostname[HOSTNAME_LEN] = '\0';
     }
 
     if (data->flags & HOSTNAME && data->flags & USERNAME) {

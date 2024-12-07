@@ -29,8 +29,7 @@ int main(void) {
     for (i = 0; i < BLOCKS_LEN; i++) {
         struct block block = blocks[i];
         results[i].flags = block.flags;
-        if ((pthread_create(&threads[i], NULL,
-                            block.func, &results[i])) != 0) {
+        if ((pthread_create(&threads[i], NULL, block.func, &results[i])) != 0) {
             threads[i] = (pthread_t)NULL;
         }
         if (block.func == os) {
@@ -41,13 +40,12 @@ int main(void) {
     }
 
     if (!os_name) {
-        if ((pthread_create(&threads[BLOCKS_LEN], NULL,
-                            os, &results[BLOCKS_LEN])) == 0) {
+        if ((pthread_create(&threads[BLOCKS_LEN], NULL, os,
+                            &results[BLOCKS_LEN])) == 0) {
             pthread_join(threads[BLOCKS_LEN], NULL);
             os_name = results[BLOCKS_LEN].result;
         }
     }
-
 
     for (k = 0; k < BLOCKS_LEN; k++) {
         if (threads[k]) {
@@ -75,23 +73,15 @@ int main(void) {
         if (j < BLOCKS_LEN) {
             if (j == 0) {
                 /* first field is shown as header */
-                printf("%s" BOLD " %s\n" RESET,
-                       logo[j],
-                       results[j].result);
+                printf("%s" BOLD " %s\n" RESET, logo[j], results[j].result);
             } else {
                 int spaces = label_length - strlen(results[j].label) + 1;
                 if (j < logo_lines) /* if we are still showing logo */
-                    printf("%s" BOLD " %s" RESET "%*c%s\n",
-                           logo[j],
-                           results[j].label,
-                           spaces, ' ',
-                           results[j].result);
+                    printf("%s" BOLD " %s" RESET "%*c%s\n", logo[j],
+                           results[j].label, spaces, ' ', results[j].result);
                 else /* logo ended, add whitespaces */
-                    printf("%*c" BOLD " %s" RESET "%*c%s\n",
-                           line_length, ' ',
-                           results[j].label,
-                           spaces, ' ',
-                           results[j].result);
+                    printf("%*c" BOLD " %s" RESET "%*c%s\n", line_length, ' ',
+                           results[j].label, spaces, ' ', results[j].result);
             }
             free(results[j].result);
         } else {
@@ -109,9 +99,7 @@ int main(void) {
             printf(BOLD "%s\n" RESET, results[j].result);
         else {
             int spaces = label_length - strlen(results[j].label) + 1;
-            printf(BOLD "%s" RESET "%*c%s\n",
-                   results[j].label,
-                   spaces, ' ',
+            printf(BOLD "%s" RESET "%*c%s\n", results[j].label, spaces, ' ',
                    results[j].result);
         }
     }

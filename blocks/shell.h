@@ -6,4 +6,3 @@
 void *shell(void *arg);
 
 #endif /* CFETCH_SHELL_H */
-
