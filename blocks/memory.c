@@ -16,7 +16,7 @@ void *memory(void *args) {
     size_t size = sizeof(uvmexp);
 #elif defined(__linux__)
 #define LINESIZE 100
-    FILE *meminfo = NULL;
+    FILE *meminfo;
     char line[LINESIZE] = {0};
     unsigned long mem_available = 0;
 #endif
